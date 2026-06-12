@@ -6,7 +6,13 @@ import yaml from 'js-yaml';
 import path from 'path';
 
 const autorPath = path.join(process.cwd(), 'src/data/autor.yaml');
-const autor = yaml.load(readFileSync(autorPath, 'utf8')) as any;
+const autorRaw = yaml.load(readFileSync(autorPath, 'utf8')) as any;
+const autor = {
+  ...autorRaw,
+  generos: Array.isArray(autorRaw?.generos) ? autorRaw.generos : [],
+  citas: Array.isArray(autorRaw?.citas) ? autorRaw.citas : [],
+  redes: Array.isArray(autorRaw?.redes) ? autorRaw.redes : [],
+};
 
 // Schema.org Person
 const schemaPerson = {

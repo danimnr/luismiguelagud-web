@@ -16,7 +16,8 @@ const cfg = {
   footer: cfgRaw?.footer ?? { texto_legal: '© {year} Luis Miguel Agud Sorlí.', aviso_legal: true, politica_privacidad: true, politica_cookies: false },
 };
 const autorPath = path.join(process.cwd(), 'src/data/autor.yaml');
-const autor = yaml.load(readFileSync(autorPath, 'utf8')) as any;
+const autorRaw2 = yaml.load(readFileSync(autorPath, 'utf8')) as any;
+const autor = { ...autorRaw2, redes: Array.isArray(autorRaw2?.redes) ? autorRaw2.redes : [] };
 ---
 
 <section
