@@ -1,10 +1,11 @@
 ---
-titulo: "Podcast Palabras Mayores — Episodio 47"
-tipo: "podcast"
-fecha: 2024-02-14
-medio: "Palabras Mayores"
-descripcion: "Charla sobre el proceso de escritura, la influencia de la narrativa breve americana y los miedos del escritor primerizo."
-enlace: "https://palabrasmayores.es/ep47"
+titulo: Entrevista sobre "Ecos de Killasagh".
+tipo: Entrevista.
+fecha: 2026-05-05
+medio: Editorial ACEN.
+descripcion: Accede a la entrevista completa con Editorial ACEN.
+enlace: https://aceneditorial.es/entrevista-a-luismi-agud-2/
+imagen: /uploads/2mW54rAZ_400x400-1.jpg
 activo: true
-orden: 1
+orden: 5
 ---
