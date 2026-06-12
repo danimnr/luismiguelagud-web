@@ -1,9 +1,12 @@
 ---
-titulo: "Firma de ejemplares — Feria del Libro de Valencia"
-tipo: "presentacion"
-fecha: 2024-05-15
-medio: "Feria del Libro de Valencia"
-descripcion: "Firma de ejemplares de La Maldición de Killasagh y Ecos de Killasagh con la editorial Acen. Una tarde rodeado de lectores y libros."
+titulo: Entrevista completa en Editorial ACEN
+tipo: Entrevista
+fecha: 2025-03-20
+medio: Editorial ACEN
+descripcion: Accede a la entrevista de Editorial ACEN.
+enlace: https://aceneditorial.es/entrevista-a-luismi-agud/
+imagen: /uploads/2mW54rAZ_400x400.jpg
+imagen_alt: Logotipo de Editorial ACEN
 activo: true
-orden: 1
+orden: 4
 ---
