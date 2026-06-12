@@ -1,38 +1,19 @@
-nombre: "Luis Miguel Agud Sorlí"
-nombre_corto: "Luismi Agud"
-subtitulo: "Escritor"
-residencia: "Valencia, España"
-
-generos:
-  - "Fantasía"
-  - "Terror"
-  - "Ficción especulativa"
-
+nombre: Luis Miguel Agud Sorlí
+nombre_corto: Luismi Agud
+subtitulo: Escritor
+residencia: Monroyo, Teruel, Aragón, España
+generos: Fantasía, Terror,Ficción especulativa
 bio_corta: >
-  Escritor valenciano. Autor de la saga de fantasía y terror «Killasagh» y del relato
-  «El Grito que Ahogaron tus Manos». Publica artículos de opinión y cultura en
-  La Comarca Grupo de Comunicación.
-
-bio_completa: >
-  Luis Miguel Agud Sorlí nació y creció en Valencia, donde la imaginación encontró
-  pronto el camino hacia las páginas.
-
-foto: "/images/placeholder/autor-bio.jpg"
-foto_alt: "Luis Miguel Agud Sorlí firmando ejemplares en una feria del libro"
-email: "hola@luismiguelagud.com"
-cita_texto: "La Maldición de Killasagh llegó a su segunda edición. Eso no ocurre por casualidad."
-cita_autor: "Editorial Acen"
-red_instagram: "https://instagram.com/luismiguelagud"
-red_twitter: "https://twitter.com/luismiguelagud"
-
-redes:
-  - red: "instagram"
-    url: "https://instagram.com/luismiguelagud"
-    etiqueta: "@luismiguelagud"
-  - red: "twitter"
-    url: "https://twitter.com/luismiguelagud"
-    etiqueta: "@luismiguelagud"
-
-citas:
-  - texto: "La Maldición de Killasagh llegó a su segunda edición. Eso no ocurre por casualidad."
-    autor: "Editorial Acen"
+  Escritor montrogino. Autor de la saga de fantasía y terror «Killasagh» y del
+  relato «El Grito que Ahogaron tus Manos». Publica artículos de opinión y
+  cultura en La Comarca Grupo de Comunicación.
+bio_completa: Luis Miguel Agud Sorlí nació y creció en Monroyo, donde la
+  imaginación encontró pronto el camino hacia las páginas.
+foto: /images/placeholder/autor-bio.jpg
+foto_alt: Luis Miguel Agud Sorlí firmando ejemplares en una feria del libro
+email: luismiaguds@gmail.com
+cita_texto: La Maldición de Killasagh llegó a su segunda edición. Eso no ocurre
+  por casualidad.
+cita_autor: Editorial Acen
+red_instagram: https://instagram.com/luismiguelagud
+red_twitter: https://twitter.com/luismiguelagud
