@@ -1,168 +1,103 @@
-# ╔══════════════════════════════════════════════════════════════╗
-# ║  PAGES CMS — Configuración de colecciones                    ║
-# ║  Web de Luis Miguel Agud Sorlí                               ║
-# ╚══════════════════════════════════════════════════════════════╝
-
 media:
   input: public/uploads
   output: /uploads
 
 content:
-  # ────────────────────────────────────────────────────────────
-  # CONFIGURACIÓN GENERAL
-  # ────────────────────────────────────────────────────────────
   - name: config
     label: "⚙ Configuración general"
     type: file
     path: src/data/config.yaml
     fields:
-      - name: seo
-        label: SEO global
-        type: object
-        fields:
-          - { name: titulo_sitio,  label: "Título del sitio",      type: string,  required: true }
-          - { name: descripcion,   label: "Descripción (SEO)",     type: text,    required: true }
-          - { name: imagen_og,     label: "Imagen compartir (OG)", type: image }
-          - { name: twitter_handle, label: "Twitter/X handle",    type: string }
-          - { name: idioma,        label: "Idioma",                type: string }
+      - { name: titulo_sitio,  label: "Título del sitio",        type: string }
+      - { name: descripcion,   label: "Descripción SEO",         type: text }
+      - { name: email,         label: "Email de contacto",       type: string }
+      - { name: texto_intro,   label: "Texto sección contacto",  type: text }
+      - { name: boton_email,   label: "Texto botón email",       type: string }
+      - { name: lema,          label: "Lema del hero",           type: string }
+      - { name: presentacion,  label: "Presentación del hero",   type: text }
+      - { name: imagen_hero,   label: "Foto portada",            type: image }
+      - { name: boton_libros,  label: "Texto botón libros",      type: string }
+      - { name: boton_autor,   label: "Texto botón autor",       type: string }
 
-      - name: hero
-        label: Portada (Hero)
-        type: object
-        fields:
-          - { name: titulo,        label: "Título principal",      type: string,  required: true }
-          - { name: lema,          label: "Lema o frase",          type: string,  required: true }
-          - { name: presentacion,  label: "Presentación corta",    type: text,    required: true }
-          - { name: imagen,        label: "Fotografía portada",    type: image,   required: true }
-          - { name: imagen_alt,    label: "Descripción imagen",    type: string,  required: true }
-          - { name: boton_libros,  label: "Texto botón libros",    type: string }
-          - { name: boton_autor,   label: "Texto botón autor",     type: string }
-
-      - name: secciones
-        label: Secciones visibles
-        type: object
-        fields:
-          - { name: libros,        label: "Mostrar sección Libros",      type: boolean }
-          - { name: articulos,     label: "Mostrar sección Artículos",   type: boolean }
-          - { name: apariciones,   label: "Mostrar sección Apariciones", type: boolean }
-          - { name: contacto,      label: "Mostrar sección Contacto",    type: boolean }
-
-      - name: contacto
-        label: Contacto
-        type: object
-        fields:
-          - { name: texto_intro,   label: "Texto de introducción", type: text }
-          - { name: email,         label: "Correo electrónico",    type: string,  required: true }
-          - { name: boton_email,   label: "Texto botón correo",    type: string }
-
-  # ────────────────────────────────────────────────────────────
-  # AUTOR
-  # ────────────────────────────────────────────────────────────
   - name: autor
     label: "✍ Datos del autor"
     type: file
     path: src/data/autor.yaml
     fields:
-      - { name: nombre,       label: "Nombre completo",     type: string,  required: true }
-      - { name: nombre_corto, label: "Nombre corto",        type: string }
-      - { name: subtitulo,    label: "Subtítulo (ej: Escritor)", type: string }
-      - { name: residencia,   label: "Lugar de residencia", type: string }
-      - name: generos
-        label: Géneros literarios
-        type: list
-        item: { type: string }
-      - { name: bio_corta,    label: "Biografía corta",     type: text,    required: true }
-      - { name: bio_completa, label: "Biografía completa",  type: rich-text }
-      - { name: foto,         label: "Fotografía del autor",type: image,   required: true }
-      - { name: foto_alt,     label: "Descripción de la foto", type: string, required: true }
-      - { name: email,        label: "Correo de contacto",  type: string,  required: true }
-      - { name: cita_texto,    label: "Cita destacada (texto)",   type: text }
-      - { name: cita_autor,    label: "Cita destacada (autor)",   type: string }
-      - { name: red_instagram, label: "Instagram — URL completa", type: string }
-      - { name: red_twitter,   label: "Twitter/X — URL completa", type: string }
-      - { name: red_goodreads, label: "Goodreads — URL completa", type: string }
-      - { name: red_linkedin,  label: "LinkedIn — URL completa",  type: string }
+      - { name: nombre,        label: "Nombre completo",         type: string, required: true }
+      - { name: nombre_corto,  label: "Nombre corto",            type: string }
+      - { name: subtitulo,     label: "Subtítulo",               type: string }
+      - { name: residencia,    label: "Lugar de residencia",     type: string }
+      - { name: bio_corta,     label: "Biografía corta",         type: text,   required: true }
+      - { name: bio_completa,  label: "Biografía completa",      type: rich-text }
+      - { name: foto,          label: "Fotografía del autor",    type: image,  required: true }
+      - { name: foto_alt,      label: "Descripción de la foto",  type: string, required: true }
+      - { name: email,         label: "Email de contacto",       type: string, required: true }
+      - { name: cita_texto,    label: "Cita destacada",          type: text }
+      - { name: cita_autor,    label: "Atribución de la cita",   type: string }
+      - { name: red_instagram, label: "Instagram (URL)",         type: string }
+      - { name: red_twitter,   label: "Twitter/X (URL)",         type: string }
+      - { name: red_goodreads, label: "Goodreads (URL)",         type: string }
+      - { name: red_linkedin,  label: "LinkedIn (URL)",          type: string }
 
-  # ────────────────────────────────────────────────────────────
-  # LIBROS
-  # ────────────────────────────────────────────────────────────
   - name: libros
     label: "📚 Libros"
     type: collection
     path: src/content/libros
     view:
-      fields: [titulo, estado, orden, destacado]
+      fields: [titulo, estado, orden]
     fields:
-      - { name: titulo,            label: "Título",                  type: string,  required: true }
-      - { name: portada,           label: "Portada del libro",       type: image,   required: true }
+      - { name: titulo,            label: "Título",                  type: string, required: true }
+      - { name: portada,           label: "Portada",                 type: image,  required: true }
       - { name: portada_alt,       label: "Descripción de la portada", type: string, required: true }
-      - { name: descripcion_corta, label: "Descripción corta",       type: text,    required: true }
+      - { name: descripcion_corta, label: "Descripción corta",       type: text,   required: true }
       - { name: sinopsis,          label: "Sinopsis completa",       type: rich-text }
-      - { name: precio,            label: "Precio (número)",         type: number }
-      - { name: moneda, label: "Moneda (EUR, USD, GBP...)", type: string, default: EUR }
+      - { name: precio,            label: "Precio",                  type: number }
+      - { name: moneda,            label: "Moneda (EUR, USD...)",    type: string }
       - { name: fecha_publicacion, label: "Fecha de publicación",    type: date }
       - { name: editorial,         label: "Editorial",               type: string }
-      - { name: isbn,              label: "ISBN (opcional)",         type: string }
+      - { name: isbn,              label: "ISBN",                    type: string }
       - { name: paginas,           label: "Número de páginas",       type: number }
       - { name: genero,            label: "Género literario",        type: string }
-      - name: estado
-        label: "Estado (publicado / proximamente / agotado)"
-        type: string
-        default: publicado
-        required: true
+      - { name: estado,            label: "Estado (publicado / proximamente / agotado)", type: string, required: true }
       - { name: boton_texto,       label: "Texto del botón compra",  type: string }
       - { name: enlace_compra,     label: "Enlace de compra (URL)",  type: string }
-      - { name: enlace_amazon,  label: "Amazon (URL)",    type: string }
-      - { name: enlace_fnac,    label: "FNAC (URL)",      type: string }
+      - { name: enlace_amazon,     label: "Amazon (URL)",            type: string }
+      - { name: enlace_fnac,       label: "FNAC (URL)",              type: string }
       - { name: enlace_casadellibro, label: "Casa del Libro (URL)", type: string }
-      - { name: enlace_acen,    label: "Editorial Acen (URL)", type: string }
-      - { name: destacado, label: "¿Libro destacado?", type: boolean, default: false }
-      - { name: orden,     label: "Orden de aparición (número)", type: number, required: true }
-      - { name: fragmento_pdf, label: "Enlace a fragmento PDF", type: string }
-      - name: resenas
-        label: Reseñas y citas
-        type: list
-        item:
-          type: object
-          fields:
-            - { name: texto, label: "Texto de la reseña", type: text,   required: true }
-            - { name: autor, label: "Fuente o autor",     type: string, required: true }
+      - { name: enlace_acen,       label: "Editorial Acen (URL)",    type: string }
+      - { name: destacado,         label: "¿Libro destacado?",       type: boolean }
+      - { name: orden,             label: "Orden de aparición",      type: number, required: true }
+      - { name: fragmento_pdf,     label: "Enlace a fragmento PDF",  type: string }
+      - name: body
+        label: "Contenido adicional"
+        type: rich-text
 
-  # ────────────────────────────────────────────────────────────
-  # ARTÍCULOS
-  # ────────────────────────────────────────────────────────────
   - name: articulos
-    label: "📰 Artículos y publicaciones"
+    label: "📰 Artículos"
     type: collection
     path: src/content/articulos
     view:
-      fields: [titulo, tipo, fecha, publicado, orden]
+      fields: [titulo, tipo, fecha, publicado]
     fields:
-      - { name: titulo,    label: "Título",              type: string, required: true }
-      - { name: imagen,    label: "Imagen del artículo", type: image }
-      - { name: imagen_alt, label: "Descripción imagen", type: string }
-      - { name: extracto,  label: "Extracto o resumen",  type: text,   required: true }
-      - { name: fecha,     label: "Fecha de publicación", type: date,  required: true }
-      - { name: medio,     label: "Medio o revista",     type: string }
-      - { name: categoria, label: "Categoría",           type: string }
-      - name: etiquetas
-        label: Etiquetas
-        type: list
-        item: { type: string }
-      - { name: autor,     label: "Autor",               type: string }
-      - { name: tipo, label: "Tipo (propio / externo)", type: string, default: propio, required: true }
-      - { name: enlace_externo,  label: "URL del artículo externo",   type: string }
-      - { name: tiempo_lectura,  label: "Tiempo de lectura (minutos)", type: number }
-      - { name: destacado,       label: "¿Artículo destacado?",        type: boolean }
-      - { name: orden,           label: "Orden de aparición",          type: number }
-      - { name: publicado,       label: "¿Publicado?",                 type: boolean, default: true }
+      - { name: titulo,        label: "Título",                       type: string, required: true }
+      - { name: imagen,        label: "Imagen",                       type: image }
+      - { name: imagen_alt,    label: "Descripción imagen",           type: string }
+      - { name: extracto,      label: "Extracto o resumen",           type: text,   required: true }
+      - { name: fecha,         label: "Fecha de publicación",         type: date,   required: true }
+      - { name: medio,         label: "Medio o revista",              type: string }
+      - { name: categoria,     label: "Categoría",                    type: string }
+      - { name: autor,         label: "Autor",                        type: string }
+      - { name: tipo,          label: "Tipo (propio / externo)",      type: string }
+      - { name: enlace_externo, label: "URL artículo externo",        type: string }
+      - { name: tiempo_lectura, label: "Minutos de lectura",          type: number }
+      - { name: destacado,     label: "¿Destacado?",                  type: boolean }
+      - { name: orden,         label: "Orden de aparición",           type: number }
+      - { name: publicado,     label: "¿Publicado?",                  type: boolean }
       - name: body
-        label: Contenido (solo artículos propios)
+        label: "Contenido (solo artículos propios)"
         type: rich-text
 
-  # ────────────────────────────────────────────────────────────
-  # APARICIONES Y EVENTOS
-  # ────────────────────────────────────────────────────────────
   - name: apariciones
     label: "🎙 Apariciones y eventos"
     type: collection
@@ -170,20 +105,17 @@ content:
     view:
       fields: [titulo, tipo, fecha, activo]
     fields:
-      - { name: titulo, label: "Título",           type: string, required: true }
-      - { name: tipo, label: "Tipo (entrevista / podcast / presentacion / premio / evento / colaboracion / relato / prensa / otro)", type: string, required: true }
-      - { name: fecha,       label: "Fecha",             type: date }
-      - { name: medio,       label: "Medio o plataforma", type: string }
-      - { name: descripcion, label: "Descripción corta", type: text }
-      - { name: enlace,      label: "Enlace (URL)",       type: string }
-      - { name: imagen,      label: "Imagen",             type: image }
-      - { name: imagen_alt,  label: "Descripción imagen", type: string }
-      - { name: activo,      label: "¿Mostrar en la web?", type: boolean, default: true }
-      - { name: orden,       label: "Orden de aparición", type: number }
+      - { name: titulo,       label: "Título",                        type: string, required: true }
+      - { name: tipo,         label: "Tipo (entrevista / podcast / presentacion / premio / evento / colaboracion / relato / prensa / otro)", type: string, required: true }
+      - { name: fecha,        label: "Fecha",                         type: date }
+      - { name: medio,        label: "Medio o plataforma",            type: string }
+      - { name: descripcion,  label: "Descripción",                   type: text }
+      - { name: enlace,       label: "Enlace (URL)",                  type: string }
+      - { name: imagen,       label: "Imagen",                        type: image }
+      - { name: imagen_alt,   label: "Descripción imagen",            type: string }
+      - { name: activo,       label: "¿Mostrar en la web?",           type: boolean }
+      - { name: orden,        label: "Orden de aparición",            type: number }
 
-  # ────────────────────────────────────────────────────────────
-  # PÁGINAS LEGALES
-  # ────────────────────────────────────────────────────────────
   - name: paginas-legales
     label: "📄 Páginas legales"
     type: collection
@@ -191,10 +123,10 @@ content:
     view:
       fields: [titulo, publicada]
     fields:
-      - { name: titulo,       label: "Título de la página", type: string,  required: true }
-      - { name: descripcion,  label: "Descripción (SEO)",   type: string }
-      - { name: publicada,    label: "¿Publicada?",         type: boolean, default: true }
+      - { name: titulo,      label: "Título",        type: string,    required: true }
+      - { name: descripcion, label: "Descripción",   type: string }
+      - { name: publicada,   label: "¿Publicada?",   type: boolean }
       - name: body
-        label: Contenido
+        label: "Contenido"
         type: rich-text
         required: true
