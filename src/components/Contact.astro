@@ -6,7 +6,15 @@ import yaml from 'js-yaml';
 import path from 'path';
 
 const cfgPath = path.join(process.cwd(), 'src/data/config.yaml');
-const cfg = yaml.load(readFileSync(cfgPath, 'utf8')) as any;
+const cfgRaw = yaml.load(readFileSync(cfgPath, 'utf8')) as any;
+const cfg = {
+  seo: cfgRaw?.seo ?? { titulo_sitio: 'Luismi Agud', descripcion: '', imagen_og: '' },
+  nav: cfgRaw?.nav ?? { inicio: 'Inicio', sobre_mi: 'Sobre mí', libros: 'Libros', articulos: 'Artículos', contacto: 'Contacto' },
+  hero: cfgRaw?.hero ?? { titulo: 'Luismi Agud', lema: '', presentacion: '', imagen: '/images/placeholder/hero-autor.jpg', imagen_alt: '', boton_libros: 'Ver mis libros', boton_autor: 'Conocerme' },
+  secciones: cfgRaw?.secciones ?? { libros: true, articulos: true, apariciones: true, contacto: true },
+  contacto: cfgRaw?.contacto ?? { texto_intro: '', email: 'hola@luismiguelagud.com', boton_email: 'Escribir un correo' },
+  footer: cfgRaw?.footer ?? { texto_legal: '© {year} Luis Miguel Agud Sorlí.', aviso_legal: true, politica_privacidad: true, politica_cookies: false },
+};
 const autorPath = path.join(process.cwd(), 'src/data/autor.yaml');
 const autor = yaml.load(readFileSync(autorPath, 'utf8')) as any;
 ---

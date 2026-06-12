@@ -6,9 +6,10 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 
 const cfgPath = path.join(process.cwd(), 'src/data/config.yaml');
-const cfg = yaml.load(readFileSync(cfgPath, 'utf8')) as any;
+const cfgRaw = yaml.load(readFileSync(cfgPath, 'utf8')) as any;
 const autorPath = path.join(process.cwd(), 'src/data/autor.yaml');
 const autor = yaml.load(readFileSync(autorPath, 'utf8')) as any;
+const nav = cfgRaw?.nav ?? { inicio: 'Inicio', sobre_mi: 'Sobre mí', libros: 'Libros', articulos: 'Artículos', contacto: 'Contacto' };
 ---
 
 <header
@@ -31,11 +32,11 @@ const autor = yaml.load(readFileSync(autorPath, 'utf8')) as any;
 
     <!-- Navegación desktop -->
     <nav class="hidden lg:flex items-center gap-8" aria-label="Navegación principal">
-      <a href="/#inicio"    class="nav-link">{cfg.nav.inicio}</a>
-      <a href="/#sobre-mi"  class="nav-link">{cfg.nav.sobre_mi}</a>
-      <a href="/#libros"    class="nav-link">{cfg.nav.libros}</a>
-      <a href="/#articulos" class="nav-link">{cfg.nav.articulos}</a>
-      <a href="/#contacto"  class="nav-link">{cfg.nav.contacto}</a>
+      <a href="/#inicio"    class="nav-link">{nav.inicio}</a>
+      <a href="/#sobre-mi"  class="nav-link">{nav.sobre_mi}</a>
+      <a href="/#libros"    class="nav-link">{nav.libros}</a>
+      <a href="/#articulos" class="nav-link">{nav.articulos}</a>
+      <a href="/#contacto"  class="nav-link">{nav.contacto}</a>
     </nav>
 
     <!-- Acciones -->
@@ -91,11 +92,11 @@ const autor = yaml.load(readFileSync(autorPath, 'utf8')) as any;
   >
     <ul class="flex flex-col divide-y divide-arena dark:divide-arena-dark" role="list">
       {[
-        ['/#inicio', cfg.nav.inicio],
-        ['/#sobre-mi', cfg.nav.sobre_mi],
-        ['/#libros', cfg.nav.libros],
-        ['/#articulos', cfg.nav.articulos],
-        ['/#contacto', cfg.nav.contacto],
+        ['/#inicio', nav.inicio],
+        ['/#sobre-mi', nav.sobre_mi],
+        ['/#libros', nav.libros],
+        ['/#articulos', nav.articulos],
+        ['/#contacto', nav.contacto],
       ].map(([href, label]) => (
         <li>
           <a
