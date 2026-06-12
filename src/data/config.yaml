@@ -1,50 +1,13 @@
-seo:
-  titulo_sitio: "Luismi Agud — Escritor de fantasía y terror"
-  descripcion: "Web oficial de Luis Miguel Agud Sorlí, escritor natural de Monroyo. Autor de la saga Killasagh y colaborador de La Comarca."
-  imagen_og: "/images/placeholder/og-default.jpg"
-  twitter_handle: "@luismiguelagud"
-  idioma: "es"
-
-nav:
-  inicio: "Inicio"
-  sobre_mi: "Sobre mí"
-  libros: "Libros"
-  articulos: "Artículos"
-  contacto: "Contacto"
-
-hero:
-  titulo: "Luismi\nAgud"
-  lema: "Mundos que no existen, emociones que sí"
-  presentacion: "Escritor de fantasía y terror. Creador del universo Killasagh. Colaborador de La Comarca Grupo de Comunicación."
-  imagen: "/images/placeholder/hero-autor.jpg"
-  imagen_alt: "Luis Miguel Agud Sorlí, escritor"
-  boton_libros: "Ver mis libros"
-  boton_autor: "Conocerme"
-
-secciones:
-  libros: true
-  articulos: true
-  apariciones: true
-  contacto: true
-
-contacto:
-  texto_intro: "¿Tienes una pregunta, una propuesta o simplemente quieres hablar de libros? Escríbeme y te respondo."
-  email: "hola@luismiguelagud.com"
-  boton_email: "Escribir un correo"
-
-footer:
-  texto_legal: "© {year} Luis Miguel Agud Sorlí. Todos los derechos reservados."
-  aviso_legal: true
-  politica_privacidad: true
-  politica_cookies: false
-
-titulo_sitio: "Luismi Agud — Escritor de fantasía y terror"
-descripcion: "Web oficial de Luis Miguel Agud Sorlí, escritor natural de Monroyo. Autor de la saga Killasagh y colaborador de La Comarca."
-email: "hola@luismiguelagud.com"
-texto_intro: "¿Tienes una pregunta, una propuesta o simplemente quieres hablar de libros? Escríbeme y te respondo."
-boton_email: "Escribir un correo"
-lema: "Mundos que no existen, emociones que sí"
-presentacion: "Escritor de fantasía y terror. Creador del universo Killasagh. Colaborador de La Comarca Grupo de Comunicación."
-imagen_hero: "/images/placeholder/hero-autor.jpg"
-boton_libros: "Ver mis libros"
-boton_autor: "Conocerme"
+titulo_sitio: Luismi Agud — Escritor de thriller.
+descripcion: Web oficial de Luis Miguel Agud Sorlí, escritor natural de Monroyo.
+  Autor de la saga Killasagh y colaborador de La Comarca.
+email: luismiaguds@gmail.com
+texto_intro: ¿Tienes una pregunta, una propuesta o simplemente quieres hablar de
+  libros? Escríbeme y te respondo.
+boton_email: Escribir un correo
+lema: Mundos que no existen, emociones que sí
+presentacion: Escritor de fantasía y terror. Creador del universo Killasagh.
+  Colaborador de La Comarca Grupo de Comunicación.
+imagen_hero: /images/placeholder/hero-autor.jpg
+boton_libros: Ver mis libros
+boton_autor: Conocerme
