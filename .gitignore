@@ -1,0 +1,25 @@
+# Dependencias
+node_modules/
+.npm
+
+# Build
+dist/
+.astro/
+
+# Entorno (NUNCA subas secretos)
+.env
+.env.*
+!.env.example
+
+# SO
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*

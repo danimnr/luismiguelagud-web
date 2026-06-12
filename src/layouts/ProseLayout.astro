@@ -1,0 +1,84 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  titulo: string;
+  descripcion?: string;
+  imagen?: string;
+  fecha?: Date;
+  medio?: string;
+  tiempoLectura?: number;
+  schema?: object;
+}
+
+const { titulo, descripcion = '', imagen, fecha, medio, tiempoLectura, schema } = Astro.props;
+
+const fechaFormateada = fecha
+  ? new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(fecha))
+  : undefined;
+---
+
+<BaseLayout titulo={titulo} descripcion={descripcion} imagen={imagen} tipo="article" schema={schema}>
+  <article class="pt-28 pb-section">
+    <!-- Encabezado -->
+    <header class="container mx-auto px-6 lg:px-10 max-w-3xl mb-12">
+      {(medio || fecha) && (
+        <div class="flex items-center gap-4 mb-4">
+          {medio && (
+            <span class="font-body text-xs font-medium tracking-widest uppercase text-gris">{medio}</span>
+          )}
+          {fecha && (
+            <time
+              datetime={new Date(fecha).toISOString()}
+              class="font-body text-xs text-gris"
+            >
+              {fechaFormateada}
+            </time>
+          )}
+          {tiempoLectura && (
+            <span class="font-body text-xs text-gris">{tiempoLectura} min de lectura</span>
+          )}
+        </div>
+      )}
+      <span class="oro-line" aria-hidden="true"></span>
+      <h1 class="font-display text-display-lg text-tinta dark:text-tinta-dark mt-2 leading-tight">
+        {titulo}
+      </h1>
+      {descripcion && (
+        <p class="font-body text-lg text-gris mt-4 leading-relaxed">{descripcion}</p>
+      )}
+    </header>
+
+    <!-- Imagen destacada -->
+    {imagen && (
+      <div class="container mx-auto px-6 lg:px-10 max-w-3xl mb-10">
+        <img
+          src={imagen}
+          alt=""
+          width="800"
+          height="450"
+          class="w-full aspect-video object-cover"
+          loading="lazy"
+        />
+      </div>
+    )}
+
+    <!-- Contenido -->
+    <div class="container mx-auto px-6 lg:px-10 prose-editorial">
+      <slot />
+    </div>
+
+    <!-- Volver -->
+    <div class="container mx-auto px-6 lg:px-10 max-w-3xl mt-14">
+      <a
+        href="javascript:history.back()"
+        class="font-body text-sm text-gris hover:text-tinta dark:hover:text-tinta-dark transition-colors flex items-center gap-2"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Volver
+      </a>
+    </div>
+  </article>
+</BaseLayout>

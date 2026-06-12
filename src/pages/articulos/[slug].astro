@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import ProseLayout from '../../layouts/ProseLayout.astro';
+
+export async function getStaticPaths() {
+  const articulos = await getCollection('articulos', ({ data }) => {
+    return data.tipo === 'propio' && data.publicado !== false;
+  });
+  return articulos.map(art => ({
+    params: { slug: art.slug },
+    props: { articulo: art },
+  }));
+}
+
+const { articulo } = Astro.props;
+const { Content } = await articulo.render();
+const d = articulo.data;
+
+const schemaArticle = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: d.titulo,
+  description: d.extracto,
+  ...(d.imagen && { image: `https://luismiguelagud.com${d.imagen}` }),
+  datePublished: new Date(d.fecha).toISOString(),
+  author: { '@type': 'Person', name: d.autor, url: 'https://luismiguelagud.com' },
+  ...(d.medio && { publisher: { '@type': 'Organization', name: d.medio } }),
+  breadcrumb: {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://luismiguelagud.com' },
+      { '@type': 'ListItem', position: 2, name: 'Artículos', item: 'https://luismiguelagud.com/#articulos' },
+      { '@type': 'ListItem', position: 3, name: d.titulo, item: `https://luismiguelagud.com/articulos/${articulo.slug}` },
+    ],
+  },
+};
+---
+
+<ProseLayout
+  titulo={`${d.titulo} — Luis Miguel Agud Sorlí`}
+  descripcion={d.extracto}
+  imagen={d.imagen}
+  fecha={d.fecha}
+  medio={d.medio}
+  tiempoLectura={d.tiempo_lectura}
+  schema={schemaArticle}
+>
+  <!-- Breadcrumb -->
+  <nav aria-label="Navegación de ruta" class="mb-8 -mt-4">
+    <ol class="flex items-center gap-2 font-body text-xs text-gris" role="list">
+      <li><a href="/" class="hover:text-oro transition-colors">Inicio</a></li>
+      <li aria-hidden="true">›</li>
+      <li><a href="/#articulos" class="hover:text-oro transition-colors">Artículos</a></li>
+      <li aria-hidden="true">›</li>
+      <li class="text-tinta dark:text-tinta-dark" aria-current="page">{d.titulo}</li>
+    </ol>
+  </nav>
+
+  <Content />
+
+  <!-- Etiquetas -->
+  {d.etiquetas && d.etiquetas.length > 0 && (
+    <div class="mt-10 pt-6 border-t border-arena dark:border-arena-dark">
+      <p class="font-body text-xs font-medium tracking-widest uppercase text-gris mb-3">Etiquetas</p>
+      <ul class="flex flex-wrap gap-2" role="list">
+        {d.etiquetas.map((tag: string) => (
+          <li>
+            <span class="font-body text-xs px-3 py-1 border border-arena dark:border-arena-dark text-gris">
+              {tag}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</ProseLayout>

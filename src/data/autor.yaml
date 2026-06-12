@@ -1,0 +1,51 @@
+nombre: "Luis Miguel Agud Sorlí"
+nombre_corto: "Luismi Agud"
+subtitulo: "Escritor"
+residencia: "Valencia, España"
+
+generos:
+  - "Fantasía"
+  - "Terror"
+  - "Ficción especulativa"
+
+bio_corta: >
+  Escritor valenciano. Autor de la saga de fantasía y terror «Killasagh» y del relato
+  «El Grito que Ahogaron tus Manos». Publica artículos de opinión y cultura en
+  La Comarca Grupo de Comunicación.
+
+bio_completa: >
+  Luis Miguel Agud Sorlí nació y creció en Valencia, donde la imaginación encontró
+  pronto el camino hacia las páginas. Desde pequeño, los mundos que no existían le
+  parecían más interesantes que los que sí existían.
+
+  Su primera novela, «La Maldición de Killasagh», llegó a su segunda edición gracias
+  al apoyo de sus lectores, una señal inequívoca de que había algo en esas páginas
+  que merecía la pena. La saga continuó con «Ecos de Killasagh», publicada también
+  con la editorial Acen, llevando más lejos el universo oscuro y fascinante que había
+  comenzado a construir.
+
+  Paralelamente a la narrativa larga, explora el relato de terror y suspense con
+  «El Grito que Ahogaron tus Manos», una obra que demuestra que sabe moverse con
+  igual soltura en el formato breve.
+
+  Colabora de forma habitual con La Comarca Grupo de Comunicación, donde escribe
+  sobre cultura, literatura y el mundo que le rodea.
+
+foto: "/images/placeholder/autor-bio.jpg"
+foto_alt: "Luis Miguel Agud Sorlí firmando ejemplares en una feria del libro"
+
+email: "hola@luismiguelagud.com"
+
+citas:
+  - texto: "La Maldición de Killasagh llegó a su segunda edición. Eso no ocurre por casualidad."
+    autor: "Editorial Acen"
+  - texto: "Un universo propio, oscuro y adictivo que engancha desde la primera página."
+    autor: "Lector de La Comarca"
+
+redes:
+  - red: "instagram"
+    url: "https://instagram.com/luismiguelagud"
+    etiqueta: "@luismiguelagud"
+  - red: "twitter"
+    url: "https://twitter.com/luismiguelagud"
+    etiqueta: "@luismiguelagud"

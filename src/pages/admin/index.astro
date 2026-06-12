@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  titulo="Panel editorial — Luis Miguel Agud Sorlí"
+  descripcion="Acceso al panel de gestión de contenido"
+>
+  <div class="min-h-screen pt-28 pb-section bg-arena dark:bg-arena-dark">
+    <div class="container mx-auto px-6 lg:px-10 max-w-2xl">
+
+      <span class="oro-line" aria-hidden="true"></span>
+      <h1 class="font-display text-display-md text-tinta dark:text-tinta-dark mb-4">
+        Panel editorial
+      </h1>
+      <p class="font-body text-gris mb-10 leading-relaxed">
+        Desde aquí puedes gestionar el contenido de tu web: libros, artículos, apariciones y datos de autor.
+        No necesitas saber programar para hacer cambios.
+      </p>
+
+      <!-- Botón principal -->
+      <a
+        href="https://app.pagescms.org"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-primary text-base px-8 py-4 mb-12 inline-flex"
+      >
+        Abrir Pages CMS
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </a>
+
+      <!-- Pasos -->
+      <div class="space-y-6">
+        <h2 class="font-display text-xl text-tinta dark:text-tinta-dark">Cómo funciona</h2>
+
+        {[
+          ['1. Entra en Pages CMS', 'Ve a https://app.pagescms.org y accede con tu cuenta de GitHub.'],
+          ['2. Selecciona tu repositorio', 'Busca el repositorio de tu web (luismiguelagud) y ábrelo.'],
+          ['3. Edita el contenido', 'Verás las secciones: Libros, Artículos, Apariciones, Autor y Configuración. Haz clic en cualquiera para editar.'],
+          ['4. Guarda los cambios', 'Cuando termines, pulsa «Guardar». Pages CMS creará automáticamente un commit en GitHub.'],
+          ['5. Espera el despliegue', 'Cloudflare Pages detectará el cambio y actualizará la web en unos 2 minutos. ¡Así de fácil!'],
+        ].map(([titulo, desc]) => (
+          <div class="border border-arena dark:border-crema/10 p-6 bg-crema dark:bg-crema-dark">
+            <h3 class="font-body font-semibold text-tinta dark:text-tinta-dark mb-2">{titulo}</h3>
+            <p class="font-body text-sm text-gris leading-relaxed">{desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-10 p-6 border-l-4 border-oro bg-crema dark:bg-crema-dark">
+        <p class="font-body text-sm text-gris leading-relaxed">
+          <strong class="text-tinta dark:text-tinta-dark">¿Tienes dudas?</strong>
+          Consulta el README del repositorio o escribe a tu desarrollador.
+          Todos los cambios quedan guardados en GitHub y se pueden deshacer si algo sale mal.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

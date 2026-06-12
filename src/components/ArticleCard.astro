@@ -1,0 +1,97 @@
+---
+interface Articulo {
+  slug: string;
+  titulo: string;
+  imagen?: string;
+  imagen_alt?: string;
+  extracto: string;
+  fecha: Date;
+  medio?: string;
+  categoria?: string;
+  enlace_externo?: string;
+  tiempo_lectura?: number;
+  tipo: 'externo' | 'propio';
+}
+
+interface Props {
+  articulo: Articulo;
+}
+
+const { articulo } = Astro.props;
+
+const href = articulo.tipo === 'externo' && articulo.enlace_externo
+  ? articulo.enlace_externo
+  : `/articulos/${articulo.slug}`;
+
+const isExterno = articulo.tipo === 'externo' && Boolean(articulo.enlace_externo);
+
+const fechaFormateada = new Intl.DateTimeFormat('es-ES', {
+  day: 'numeric', month: 'long', year: 'numeric',
+}).format(new Date(articulo.fecha));
+---
+
+<article class="carousel-item group flex flex-col bg-crema dark:bg-crema-dark">
+  {articulo.imagen && (
+    <a
+      href={href}
+      {...(isExterno ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      class="block overflow-hidden aspect-video bg-arena dark:bg-arena-dark"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <img
+        src={articulo.imagen}
+        alt={articulo.imagen_alt ?? articulo.titulo}
+        width="400"
+        height="225"
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        loading="lazy"
+      />
+    </a>
+  )}
+
+  <div class="flex flex-col flex-1 pt-5">
+    <div class="flex items-center gap-3 mb-3">
+      {articulo.categoria && (
+        <span class="font-body text-xs font-medium tracking-widest uppercase text-gris">
+          {articulo.categoria}
+        </span>
+      )}
+      {isExterno && (
+        <span class="badge-externo" aria-label="Artículo publicado en medio externo">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          {articulo.medio ?? 'Externo'}
+        </span>
+      )}
+    </div>
+
+    <a
+      href={href}
+      {...(isExterno ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      class="group/title"
+      aria-label={articulo.titulo + (isExterno ? ' (abre en nueva pestaña)' : '')}
+    >
+      <h3 class="font-display text-lg font-semibold text-tinta dark:text-tinta-dark leading-snug mb-3 group-hover/title:text-oro transition-colors">
+        {articulo.titulo}
+      </h3>
+    </a>
+
+    <p class="font-body text-sm text-gris leading-relaxed flex-1 mb-4">
+      {articulo.extracto}
+    </p>
+
+    <div class="flex items-center justify-between mt-auto pt-4 border-t border-arena dark:border-arena-dark">
+      <time
+        datetime={new Date(articulo.fecha).toISOString()}
+        class="font-body text-xs text-gris"
+      >
+        {fechaFormateada}
+      </time>
+      {articulo.tiempo_lectura && (
+        <span class="font-body text-xs text-gris">{articulo.tiempo_lectura} min</span>
+      )}
+    </div>
+  </div>
+</article>

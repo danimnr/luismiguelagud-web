@@ -1,0 +1,86 @@
+---
+import { readFileSync } from 'fs';
+import yaml from 'js-yaml';
+import path from 'path';
+
+const cfgPath = path.join(process.cwd(), 'src/data/config.yaml');
+const cfg = yaml.load(readFileSync(cfgPath, 'utf8')) as any;
+const h = cfg.hero;
+---
+
+<section
+  id="inicio"
+  class="min-h-screen flex items-center pt-16 lg:pt-20 bg-crema dark:bg-crema-dark overflow-hidden"
+  aria-labelledby="hero-title"
+>
+  <div class="container mx-auto px-6 lg:px-10 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+    <!-- Texto -->
+    <div class="order-2 lg:order-1">
+      <span class="oro-line" aria-hidden="true"></span>
+      <p class="font-body text-sm font-medium tracking-widest uppercase text-oro mb-4">Escritor</p>
+
+      <h1
+        id="hero-title"
+        class="font-display text-display-xl text-tinta dark:text-tinta-dark leading-none mb-6"
+        style="white-space: pre-line;"
+      >
+        {h.titulo}
+      </h1>
+
+      <p class="font-display italic text-xl lg:text-2xl text-gris dark:text-gris mb-6 leading-snug">
+        "{h.lema}"
+      </p>
+
+      <p class="font-body text-base lg:text-lg text-gris dark:text-gris leading-relaxed max-w-md mb-10">
+        {h.presentacion}
+      </p>
+
+      <div class="flex flex-wrap gap-4">
+        <a href="/#libros" class="btn-primary">
+          {h.boton_libros}
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+        <a href="/#sobre-mi" class="btn-secondary text-tinta dark:text-tinta-dark">
+          {h.boton_autor}
+        </a>
+      </div>
+    </div>
+
+    <!-- Imagen -->
+    <div class="order-1 lg:order-2 flex justify-center lg:justify-end">
+      <div class="relative w-72 h-96 lg:w-96 lg:h-[28rem] xl:w-[26rem] xl:h-[32rem]">
+        <!-- Decoración geométrica -->
+        <div
+          class="absolute -top-4 -left-4 w-full h-full border border-oro/30"
+          aria-hidden="true"
+        ></div>
+        <img
+          src={h.imagen}
+          alt={h.imagen_alt}
+          width="416"
+          height="512"
+          class="relative z-10 w-full h-full object-cover"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <!-- Bloque decorativo oro -->
+        <div
+          class="absolute -bottom-4 -right-4 w-24 h-24 bg-oro/20"
+          aria-hidden="true"
+        ></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Indicador de scroll -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gris opacity-60" aria-hidden="true">
+    <span class="font-body text-xs tracking-widest uppercase">Descubrir</span>
+    <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </div>
+</section>

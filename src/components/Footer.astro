@@ -1,0 +1,65 @@
+---
+import SocialLinks from './SocialLinks.astro';
+import { readFileSync } from 'fs';
+import yaml from 'js-yaml';
+import path from 'path';
+
+const cfgPath = path.join(process.cwd(), 'src/data/config.yaml');
+const cfg = yaml.load(readFileSync(cfgPath, 'utf8')) as any;
+const autorPath = path.join(process.cwd(), 'src/data/autor.yaml');
+const autor = yaml.load(readFileSync(autorPath, 'utf8')) as any;
+
+const year = new Date().getFullYear();
+const legal = cfg.footer.texto_legal.replace('{year}', String(year));
+---
+
+<footer class="bg-tinta dark:bg-tinta text-crema/60 py-12" role="contentinfo">
+  <div class="container mx-auto px-6 lg:px-10">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+
+      <!-- Logo / nombre -->
+      <a
+        href="/"
+        class="font-display font-bold text-crema hover:text-oro transition-colors text-lg tracking-tight"
+        aria-label="Inicio"
+      >
+        <span class="text-oro">L</span>uis Miguel Agud Sorlí
+      </a>
+
+      <!-- Redes -->
+      {autor.redes?.length > 0 && (
+        <SocialLinks
+          redes={autor.redes}
+          clase="[&_a]:text-crema/40 [&_a:hover]:text-oro"
+        />
+      )}
+    </div>
+
+    <div class="border-t border-crema/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+      <p class="font-body text-crema/40">
+        {legal}
+      </p>
+
+      <nav aria-label="Páginas legales" class="flex items-center gap-6">
+        {cfg.footer.aviso_legal && (
+          <a href="/aviso-legal" class="font-body hover:text-oro hover:text-crema transition-colors">
+            Aviso legal
+          </a>
+        )}
+        {cfg.footer.politica_privacidad && (
+          <a href="/politica-privacidad" class="font-body hover:text-crema transition-colors">
+            Privacidad
+          </a>
+        )}
+        <!-- Enlace discreto al panel -->
+        <a
+          href="/admin"
+          class="font-body text-crema/20 hover:text-crema/60 transition-colors"
+          aria-label="Acceso al panel editorial"
+        >
+          ⚙
+        </a>
+      </nav>
+    </div>
+  </div>
+</footer>

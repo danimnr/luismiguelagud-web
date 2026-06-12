@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import BooksSection from '../components/BooksSection.astro';
+import ArticlesSection from '../components/ArticlesSection.astro';
+import AppearancesSection from '../components/AppearancesSection.astro';
+import Contact from '../components/Contact.astro';
+
+import { readFileSync } from 'fs';
+import yaml from 'js-yaml';
+import path from 'path';
+
+const cfgPath = path.join(process.cwd(), 'src/data/config.yaml');
+const cfg = yaml.load(readFileSync(cfgPath, 'utf8')) as any;
+const autorPath = path.join(process.cwd(), 'src/data/autor.yaml');
+const autor = yaml.load(readFileSync(autorPath, 'utf8')) as any;
+
+const schemaPerson = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: autor.nombre,
+  url: 'https://luismiguelagud.com',
+  jobTitle: 'Escritor',
+  sameAs: autor.redes?.map((r: any) => r.url) ?? [],
+};
+---
+
+<BaseLayout
+  titulo={cfg.seo.titulo_sitio}
+  descripcion={cfg.seo.descripcion}
+  imagen={cfg.seo.imagen_og}
+  schema={schemaPerson}
+>
+  <Hero />
+  <div class="section-divider" aria-hidden="true"></div>
+  <About />
+  <div class="section-divider" aria-hidden="true"></div>
+  {cfg.secciones.libros && <BooksSection />}
+  {cfg.secciones.articulos && (
+    <>
+      <div class="section-divider" aria-hidden="true"></div>
+      <ArticlesSection />
+    </>
+  )}
+  {cfg.secciones.apariciones && (
+    <>
+      <div class="section-divider" aria-hidden="true"></div>
+      <AppearancesSection />
+    </>
+  )}
+  {cfg.secciones.contacto && (
+    <>
+      <div class="section-divider" aria-hidden="true"></div>
+      <Contact />
+    </>
+  )}
+</BaseLayout>

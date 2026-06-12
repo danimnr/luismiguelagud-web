@@ -1,0 +1,222 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const libros = await getCollection('libros');
+  return libros.map(libro => ({
+    params: { slug: libro.slug },
+    props: { libro },
+  }));
+}
+
+const { libro } = Astro.props;
+const d = libro.data;
+
+const fechaFormateada = d.fecha_publicacion
+  ? new Intl.DateTimeFormat('es-ES', { year: 'numeric', month: 'long' }).format(new Date(d.fecha_publicacion))
+  : undefined;
+
+const etiquetaEstado: Record<string, string> = {
+  publicado: 'Disponible',
+  proximamente: 'Próximamente',
+  agotado: 'Agotado',
+};
+
+const schemaBook = {
+  '@context': 'https://schema.org',
+  '@type': 'Book',
+  name: d.titulo,
+  description: d.descripcion_corta,
+  image: `https://luismiguelagud.com${d.portada}`,
+  author: { '@type': 'Person', name: 'Luis Miguel Agud Sorlí', url: 'https://luismiguelagud.com' },
+  ...(d.isbn && { isbn: d.isbn }),
+  ...(d.editorial && { publisher: { '@type': 'Organization', name: d.editorial } }),
+  ...(d.fecha_publicacion && { datePublished: new Date(d.fecha_publicacion).toISOString().split('T')[0] }),
+  ...(d.paginas && { numberOfPages: d.paginas }),
+  ...(d.genero && { genre: d.genero }),
+  ...(d.enlace_compra && { url: d.enlace_compra }),
+  breadcrumb: {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://luismiguelagud.com' },
+      { '@type': 'ListItem', position: 2, name: 'Libros', item: 'https://luismiguelagud.com/#libros' },
+      { '@type': 'ListItem', position: 3, name: d.titulo, item: `https://luismiguelagud.com/libros/${libro.slug}` },
+    ],
+  },
+};
+---
+
+<BaseLayout
+  titulo={`${d.titulo} — Luis Miguel Agud Sorlí`}
+  descripcion={d.descripcion_corta}
+  imagen={d.portada}
+  tipo="book"
+  schema={schemaBook}
+>
+  <article class="pt-28 pb-section">
+    <div class="container mx-auto px-6 lg:px-10">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="Navegación de ruta" class="mb-10">
+        <ol class="flex items-center gap-2 font-body text-xs text-gris" role="list">
+          <li><a href="/" class="hover:text-oro transition-colors">Inicio</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/#libros" class="hover:text-oro transition-colors">Libros</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-tinta dark:text-tinta-dark" aria-current="page">{d.titulo}</li>
+        </ol>
+      </nav>
+
+      <!-- Contenido -->
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+        <!-- Portada -->
+        <div class="lg:sticky lg:top-28">
+          <div class="relative max-w-sm mx-auto lg:mx-0">
+            <div class="absolute -top-3 -left-3 w-full h-full border border-oro/20" aria-hidden="true"></div>
+            <img
+              src={d.portada}
+              alt={d.portada_alt}
+              width="400"
+              height="600"
+              class="relative z-10 w-full aspect-[2/3] object-cover"
+            />
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div>
+          <span class="oro-line" aria-hidden="true"></span>
+          <span class={`badge-estado badge-${d.estado} mb-4 inline-block`}>
+            {etiquetaEstado[d.estado]}
+          </span>
+
+          <h1 class="font-display text-display-md text-tinta dark:text-tinta-dark mb-2">
+            {d.titulo}
+          </h1>
+
+          {d.editorial && (
+            <p class="font-body text-sm text-gris uppercase tracking-wider mb-6">{d.editorial}</p>
+          )}
+
+          {d.sinopsis && (
+            <div class="mb-8">
+              {d.sinopsis.split('\n\n').map((p: string) => (
+                <p class="font-body text-base text-gris leading-relaxed mb-4">{p.trim()}</p>
+              ))}
+            </div>
+          )}
+
+          <!-- Metadatos -->
+          <dl class="grid grid-cols-2 gap-x-6 gap-y-3 mb-8 font-body text-sm">
+            {d.genero && (
+              <>
+                <dt class="text-gris font-medium">Género</dt>
+                <dd class="text-tinta dark:text-tinta-dark">{d.genero}</dd>
+              </>
+            )}
+            {fechaFormateada && (
+              <>
+                <dt class="text-gris font-medium">Publicación</dt>
+                <dd class="text-tinta dark:text-tinta-dark">{fechaFormateada}</dd>
+              </>
+            )}
+            {d.paginas && (
+              <>
+                <dt class="text-gris font-medium">Páginas</dt>
+                <dd class="text-tinta dark:text-tinta-dark">{d.paginas}</dd>
+              </>
+            )}
+            {d.isbn && (
+              <>
+                <dt class="text-gris font-medium">ISBN</dt>
+                <dd class="text-tinta dark:text-tinta-dark">{d.isbn}</dd>
+              </>
+            )}
+          </dl>
+
+          <!-- Precio y botones de compra -->
+          {d.estado === 'publicado' && (
+            <div class="border-t border-arena dark:border-arena-dark pt-6 mb-6">
+              {d.precio != null && (
+                <p class="font-display text-2xl font-semibold text-tinta dark:text-tinta-dark mb-4">
+                  {d.precio.toFixed(2)} {d.moneda ?? 'EUR'}
+                </p>
+              )}
+
+              {d.enlace_compra && (
+                <a
+                  href={d.enlace_compra}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-primary w-full sm:w-auto justify-center mb-3"
+                >
+                  {d.boton_texto}
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                  </svg>
+                </a>
+              )}
+
+              {d.enlaces_alternativos && d.enlaces_alternativos.length > 0 && (
+                <div class="flex flex-wrap gap-2 mt-3">
+                  {d.enlaces_alternativos.map((enlace: { texto: string; url: string }) => (
+                    <a
+                      href={enlace.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="font-body text-xs text-gris hover:text-tinta dark:hover:text-tinta-dark underline transition-colors"
+                    >
+                      {enlace.texto}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {d.estado === 'agotado' && (
+            <p class="font-body text-sm text-gris italic mb-6">
+              Este libro está agotado actualmente. Consulta en tu librería de confianza.
+            </p>
+          )}
+
+          <!-- Fragmento PDF -->
+          {d.fragmento_pdf && (
+            <a
+              href={d.fragmento_pdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-secondary text-tinta dark:text-tinta-dark mb-6 inline-flex"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+              </svg>
+              Leer fragmento gratuito
+            </a>
+          )}
+
+          <!-- Reseñas -->
+          {d.resenas && d.resenas.length > 0 && (
+            <div class="mt-8">
+              <h2 class="font-body text-xs font-medium tracking-widest uppercase text-gris mb-4">Lo que dicen</h2>
+              <ul class="space-y-4" role="list">
+                {d.resenas.map((r: { texto: string; autor: string }) => (
+                  <li>
+                    <blockquote class="border-l-2 border-oro pl-4">
+                      <p class="font-display italic text-base text-tinta dark:text-tinta-dark leading-snug mb-1">
+                        "{r.texto}"
+                      </p>
+                      <cite class="font-body text-xs text-gris not-italic">— {r.autor}</cite>
+                    </blockquote>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

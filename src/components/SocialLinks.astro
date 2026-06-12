@@ -1,0 +1,38 @@
+---
+interface Red {
+  red: string;
+  url: string;
+  etiqueta: string;
+}
+interface Props {
+  redes: Red[];
+  clase?: string;
+  mostrarEtiqueta?: boolean;
+}
+const { redes, clase = '', mostrarEtiqueta = false } = Astro.props;
+
+const iconos: Record<string, string> = {
+  twitter: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.7 5.4 4.3 8.5 4.5-.8-3.8 2.5-6.3 5.5-4.5 1 .6 1.5 1.3 2 2Z"/></svg>`,
+  instagram: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+  goodreads: `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.525 15.977V.49h-2.059v2.906h-.064a5.152 5.152 0 0 0-.959-1.475 5.46 5.46 0 0 0-1.46-1.046 6.38 6.38 0 0 0-1.783-.561A11.055 11.055 0 0 0 11.285.49a8.31 8.31 0 0 0-3.177.596 7.202 7.202 0 0 0-2.485 1.664 7.53 7.53 0 0 0-1.618 2.529 8.785 8.785 0 0 0-.576 3.21 9.051 9.051 0 0 0 .529 3.114 7.545 7.545 0 0 0 1.537 2.547 7.182 7.182 0 0 0 2.436 1.712 7.93 7.93 0 0 0 3.21.625 8.44 8.44 0 0 0 1.848-.2 5.977 5.977 0 0 0 1.637-.637 5.792 5.792 0 0 0 1.367-1.132 6.73 6.73 0 0 0 1.004-1.679h.064v2.905a6.354 6.354 0 0 1-.336 2.031 5.038 5.038 0 0 1-1.018 1.722 4.915 4.915 0 0 1-1.692 1.19 5.86 5.86 0 0 1-2.368.447 8.469 8.469 0 0 1-1.96-.208 5.116 5.116 0 0 1-1.555-.624 3.85 3.85 0 0 1-1.07-1.046 3.275 3.275 0 0 1-.513-1.503H4.456a5.15 5.15 0 0 0 .689 2.338 6.037 6.037 0 0 0 1.619 1.804 7.702 7.702 0 0 0 2.37 1.17 10.053 10.053 0 0 0 2.99.418 9.957 9.957 0 0 0 3.562-.592 7.27 7.27 0 0 0 2.61-1.663 7.065 7.065 0 0 0 1.602-2.578 9.718 9.718 0 0 0 .545-3.369zm-7.973.54a5.691 5.691 0 0 1-2.336-.464 5.14 5.14 0 0 1-1.744-1.271 5.604 5.604 0 0 1-1.09-1.898 7.323 7.323 0 0 1-.369-2.352 7.91 7.91 0 0 1 .369-2.479 5.871 5.871 0 0 1 1.09-1.963 5.146 5.146 0 0 1 1.744-1.29 5.658 5.658 0 0 1 2.336-.464 5.691 5.691 0 0 1 2.336.464 5.148 5.148 0 0 1 1.744 1.29 5.874 5.874 0 0 1 1.09 1.963 7.91 7.91 0 0 1 .369 2.479 7.323 7.323 0 0 1-.369 2.352 5.608 5.608 0 0 1-1.09 1.898 5.142 5.142 0 0 1-1.744 1.271 5.691 5.691 0 0 1-2.336.464z"/></svg>`,
+  linkedin: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>`,
+  substack: `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>`,
+};
+---
+
+<ul class={`flex items-center gap-4 ${clase}`} role="list">
+  {redes.map((r) => (
+    <li>
+      <a
+        href={r.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-2 text-gris hover:text-oro transition-colors duration-300"
+        aria-label={r.etiqueta}
+      >
+        <span set:html={iconos[r.red] ?? ''} />
+        {mostrarEtiqueta && <span class="text-sm">{r.etiqueta}</span>}
+      </a>
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,32 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import HorizontalCarousel from './HorizontalCarousel.astro';
+import BookCard from './BookCard.astro';
+import { getCollection } from 'astro:content';
+
+const librosRaw = await getCollection('libros');
+const libros = librosRaw
+  .sort((a, b) => a.data.orden - b.data.orden)
+  .map(l => ({ slug: l.slug, ...l.data }));
+---
+
+{libros.length > 0 && (
+<section
+  id="libros"
+  class="py-section bg-crema dark:bg-crema-dark overflow-hidden"
+  aria-labelledby="libros-titulo"
+>
+  <div class="container mx-auto px-6 lg:px-10">
+    <SectionHeading
+      titulo="Mis libros"
+      subtitulo="Ficción contemporánea sobre memoria, vínculos y los silencios que nos definen."
+    />
+  </div>
+
+  <div class="container mx-auto px-6 lg:px-10">
+    <HorizontalCarousel id="libros" etiquetaAnterior="Libro anterior" etiquetaSiguiente="Libro siguiente">
+      {libros.map(libro => <BookCard libro={libro} />)}
+    </HorizontalCarousel>
+  </div>
+</section>
+)}

@@ -1,0 +1,107 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { getCollection } from 'astro:content';
+
+const aparicionesRaw = await getCollection('apariciones', ({ data }) => data.activo !== false);
+const apariciones = aparicionesRaw
+  .sort((a, b) => a.data.orden - b.data.orden)
+  .map(a => ({ slug: a.slug, ...a.data }));
+
+const iconosTipo: Record<string, string> = {
+  entrevista: '🎙',
+  podcast:    '🎧',
+  presentacion: '📖',
+  premio:     '🏆',
+  evento:     '📅',
+  colaboracion: '🤝',
+  relato:     '✍️',
+  prensa:     '📰',
+  otro:       '✦',
+};
+
+const etiquetasTipo: Record<string, string> = {
+  entrevista: 'Entrevista',
+  podcast: 'Podcast',
+  presentacion: 'Presentación',
+  premio: 'Premio',
+  evento: 'Evento',
+  colaboracion: 'Colaboración',
+  relato: 'Relato publicado',
+  prensa: 'Prensa',
+  otro: 'Aparición',
+};
+---
+
+{apariciones.length > 0 && (
+<section
+  id="apariciones"
+  class="py-section bg-crema dark:bg-crema-dark"
+  aria-labelledby="apariciones-titulo"
+>
+  <div class="container mx-auto px-6 lg:px-10">
+    <SectionHeading
+      titulo="Otros trabajos"
+      subtitulo="Entrevistas, podcasts, presentaciones y apariciones en medios."
+    />
+
+    <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+      {apariciones.map((ap, i) => (
+        <li
+          class="reveal group"
+          style={`transition-delay: ${i * 0.08}s`}
+        >
+          <div class="border border-arena dark:border-arena-dark p-6 h-full flex flex-col hover:border-oro transition-colors duration-300">
+            <div class="flex items-start justify-between mb-4">
+              <span class="text-2xl" role="img" aria-label={etiquetasTipo[ap.tipo]}>
+                {iconosTipo[ap.tipo]}
+              </span>
+              <span class="font-body text-xs font-medium tracking-widest uppercase text-oro">
+                {etiquetasTipo[ap.tipo]}
+              </span>
+            </div>
+
+            <h3 class="font-display text-base font-semibold text-tinta dark:text-tinta-dark leading-snug mb-3 flex-1">
+              {ap.titulo}
+            </h3>
+
+            {ap.descripcion && (
+              <p class="font-body text-sm text-gris leading-relaxed mb-4">
+                {ap.descripcion}
+              </p>
+            )}
+
+            <div class="flex items-center justify-between mt-auto pt-4 border-t border-arena dark:border-arena-dark">
+              {ap.medio && (
+                <span class="font-body text-xs text-gris">{ap.medio}</span>
+              )}
+              {ap.fecha && (
+                <time
+                  datetime={new Date(ap.fecha).toISOString()}
+                  class="font-body text-xs text-gris"
+                >
+                  {new Intl.DateTimeFormat('es-ES', { year: 'numeric', month: 'short' }).format(new Date(ap.fecha))}
+                </time>
+              )}
+            </div>
+
+            {ap.enlace && (
+              <a
+                href={ap.enlace}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-4 font-body text-xs font-medium text-oro hover:text-tinta dark:hover:text-tinta-dark transition-colors flex items-center gap-1"
+                aria-label={`Ver ${ap.titulo} (abre en nueva pestaña)`}
+              >
+                Ver más
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+              </a>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+)}

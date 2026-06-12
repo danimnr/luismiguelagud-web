@@ -1,0 +1,32 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import HorizontalCarousel from './HorizontalCarousel.astro';
+import ArticleCard from './ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const articulosRaw = await getCollection('articulos', ({ data }) => data.publicado !== false);
+const articulos = articulosRaw
+  .sort((a, b) => a.data.orden - b.data.orden)
+  .map(a => ({ slug: a.slug, ...a.data }));
+---
+
+{articulos.length > 0 && (
+<section
+  id="articulos"
+  class="py-section bg-arena dark:bg-arena-dark overflow-hidden"
+  aria-labelledby="articulos-titulo"
+>
+  <div class="container mx-auto px-6 lg:px-10">
+    <SectionHeading
+      titulo="Artículos y publicaciones"
+      subtitulo="Reflexiones sobre escritura, lecturas y el oficio literario."
+    />
+  </div>
+
+  <div class="container mx-auto px-6 lg:px-10">
+    <HorizontalCarousel id="articulos" etiquetaAnterior="Artículo anterior" etiquetaSiguiente="Artículo siguiente">
+      {articulos.map(articulo => <ArticleCard articulo={articulo} />)}
+    </HorizontalCarousel>
+  </div>
+</section>
+)}

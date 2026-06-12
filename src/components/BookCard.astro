@@ -1,0 +1,99 @@
+---
+interface Libro {
+  slug: string;
+  titulo: string;
+  portada: string;
+  portada_alt: string;
+  descripcion_corta: string;
+  precio?: number;
+  moneda?: string;
+  editorial?: string;
+  estado: 'publicado' | 'proximamente' | 'agotado';
+  boton_texto: string;
+  enlace_compra?: string;
+  genero?: string;
+}
+
+interface Props {
+  libro: Libro;
+}
+
+const { libro } = Astro.props;
+
+const etiquetasEstado: Record<string, string> = {
+  publicado: 'Disponible',
+  proximamente: 'Próximamente',
+  agotado: 'Agotado',
+};
+---
+
+<article class="carousel-item group flex flex-col bg-crema dark:bg-crema-dark">
+  <a
+    href={`/libros/${libro.slug}`}
+    class="block overflow-hidden aspect-[2/3] bg-arena dark:bg-arena-dark mb-0"
+    aria-label={`Ver ${libro.titulo}`}
+    tabindex="0"
+  >
+    <img
+      src={libro.portada}
+      alt={libro.portada_alt}
+      width="300"
+      height="450"
+      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+      loading="lazy"
+    />
+  </a>
+
+  <div class="flex flex-col flex-1 pt-5 pb-2">
+    <!-- Estado -->
+    <span class={`badge-estado badge-${libro.estado} mb-3 self-start`}>
+      {etiquetasEstado[libro.estado]}
+    </span>
+
+    <a href={`/libros/${libro.slug}`} class="group/title">
+      <h3 class="font-display text-xl font-semibold text-tinta dark:text-tinta-dark leading-snug mb-2 group-hover/title:text-oro transition-colors">
+        {libro.titulo}
+      </h3>
+    </a>
+
+    {libro.editorial && (
+      <p class="font-body text-xs text-gris uppercase tracking-wider mb-3">{libro.editorial}</p>
+    )}
+
+    <p class="font-body text-sm text-gris leading-relaxed flex-1 mb-4">
+      {libro.descripcion_corta}
+    </p>
+
+    <div class="flex items-center justify-between mt-auto pt-4 border-t border-arena dark:border-arena-dark">
+      {libro.precio != null && libro.estado !== 'agotado' ? (
+        <span class="font-display text-lg font-semibold text-tinta dark:text-tinta-dark">
+          {libro.precio.toFixed(2)} {libro.moneda ?? 'EUR'}
+        </span>
+      ) : (
+        <span></span>
+      )}
+
+      {libro.estado === 'publicado' && libro.enlace_compra ? (
+        <a
+          href={libro.enlace_compra}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-body text-xs font-medium tracking-wider text-oro hover:text-tinta dark:hover:text-tinta-dark transition-colors flex items-center gap-1"
+          aria-label={`${libro.boton_texto} — ${libro.titulo}`}
+        >
+          {libro.boton_texto}
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+      ) : (
+        <a
+          href={`/libros/${libro.slug}`}
+          class="font-body text-xs font-medium tracking-wider text-gris hover:text-tinta dark:hover:text-tinta-dark transition-colors"
+        >
+          Saber más →
+        </a>
+      )}
+    </div>
+  </div>
+</article>

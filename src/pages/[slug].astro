@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import ProseLayout from '../layouts/ProseLayout.astro';
+
+export async function getStaticPaths() {
+  const paginas = await getCollection('paginas', ({ data }) => data.publicada !== false);
+  return paginas.map(p => ({
+    params: { slug: p.slug },
+    props: { pagina: p },
+  }));
+}
+
+const { pagina } = Astro.props;
+const { Content } = await pagina.render();
+const d = pagina.data;
+---
+
+<ProseLayout
+  titulo={`${d.titulo} — Luis Miguel Agud Sorlí`}
+  descripcion={d.descripcion ?? d.titulo}
+>
+  <Content />
+</ProseLayout>

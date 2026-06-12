@@ -1,0 +1,21 @@
+---
+interface Props {
+  titulo: string;
+  subtitulo?: string;
+  alineacion?: 'left' | 'center';
+}
+const { titulo, subtitulo, alineacion = 'left' } = Astro.props;
+const claseAlin = alineacion === 'center' ? 'text-center items-center' : 'text-left items-start';
+---
+
+<div class={`flex flex-col ${claseAlin} mb-10 reveal`}>
+  <span class="oro-line" aria-hidden="true"></span>
+  <h2 class="font-display text-display-md text-tinta dark:text-tinta-dark">
+    {titulo}
+  </h2>
+  {subtitulo && (
+    <p class="mt-3 text-gris dark:text-gris max-w-xl leading-relaxed">
+      {subtitulo}
+    </p>
+  )}
+</div>

@@ -1,0 +1,107 @@
+---
+import SocialLinks from './SocialLinks.astro';
+import SectionHeading from './SectionHeading.astro';
+import { readFileSync } from 'fs';
+import yaml from 'js-yaml';
+import path from 'path';
+
+const autorPath = path.join(process.cwd(), 'src/data/autor.yaml');
+const autor = yaml.load(readFileSync(autorPath, 'utf8')) as any;
+
+// Schema.org Person
+const schemaPerson = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: autor.nombre,
+  jobTitle: autor.subtitulo,
+  url: 'https://luismiguelagud.com',
+  sameAs: autor.redes?.map((r: any) => r.url) ?? [],
+  email: `mailto:${autor.email}`,
+};
+---
+
+<section
+  id="sobre-mi"
+  class="py-section bg-arena dark:bg-arena-dark"
+  aria-labelledby="sobre-mi-titulo"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schemaPerson)} />
+
+  <div class="container mx-auto px-6 lg:px-10">
+    <SectionHeading titulo="Sobre mí" />
+
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+      <!-- Foto -->
+      <div class="reveal">
+        <div class="relative">
+          <div class="absolute -top-3 -left-3 w-full h-full border border-oro/20" aria-hidden="true"></div>
+          <img
+            src={autor.foto}
+            alt={autor.foto_alt}
+            width="480"
+            height="600"
+            class="relative z-10 w-full max-w-sm lg:max-w-none object-cover aspect-[4/5]"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <!-- Texto -->
+      <div class="reveal" style="transition-delay: 0.15s">
+
+        <p class="font-body text-base text-gris dark:text-gris leading-relaxed mb-8">
+          {autor.bio_corta}
+        </p>
+
+        <div class="prose-editorial text-tinta dark:text-tinta-dark mb-8">
+          {autor.bio_completa.split('\n\n').map((parrafo: string) => (
+            <p>{parrafo.trim()}</p>
+          ))}
+        </div>
+
+        <!-- Géneros -->
+        {autor.generos?.length > 0 && (
+          <div class="mb-8">
+            <p class="font-body text-xs font-medium tracking-widest uppercase text-gris mb-3">Géneros</p>
+            <div class="flex flex-wrap gap-2">
+              {autor.generos.map((g: string) => (
+                <span class="font-body text-sm px-3 py-1 border border-arena dark:border-arena-dark text-gris">
+                  {g}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Residencia -->
+        {autor.residencia && (
+          <p class="font-body text-sm text-gris mb-8 flex items-center gap-2">
+            <svg class="w-4 h-4 text-oro" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            {autor.residencia}
+          </p>
+        )}
+
+        <!-- Citas -->
+        {autor.citas?.length > 0 && (
+          <div class="border-l-2 border-oro pl-6 mb-8">
+            <blockquote class="font-display italic text-lg lg:text-xl text-tinta dark:text-tinta-dark leading-snug mb-2">
+              "{autor.citas[0].texto}"
+            </blockquote>
+            <cite class="font-body text-sm text-gris not-italic">— {autor.citas[0].autor}</cite>
+          </div>
+        )}
+
+        <!-- Redes sociales -->
+        {autor.redes?.length > 0 && (
+          <div>
+            <p class="font-body text-xs font-medium tracking-widest uppercase text-gris mb-3">Encontrarme en</p>
+            <SocialLinks redes={autor.redes} mostrarEtiqueta={true} />
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

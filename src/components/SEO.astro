@@ -1,0 +1,51 @@
+---
+interface Props {
+  titulo: string;
+  descripcion: string;
+  imagen?: string;
+  canonical?: string;
+  tipo?: 'website' | 'article' | 'book';
+  twitterHandle?: string;
+  schema?: object;
+}
+
+const {
+  titulo,
+  descripcion,
+  imagen = '/images/placeholder/og-default.jpg',
+  canonical,
+  tipo = 'website',
+  twitterHandle = '@luismiguelagud',
+  schema,
+} = Astro.props;
+
+const sitio = 'https://luismiguelagud.com';
+const url = canonical ?? new URL(Astro.url.pathname, sitio).href;
+const imagenAbsoluta = imagen.startsWith('http') ? imagen : `${sitio}${imagen}`;
+---
+
+<!-- Básico -->
+<title>{titulo}</title>
+<meta name="description" content={descripcion} />
+<link rel="canonical" href={url} />
+
+<!-- Open Graph -->
+<meta property="og:type"        content={tipo} />
+<meta property="og:url"         content={url} />
+<meta property="og:title"       content={titulo} />
+<meta property="og:description" content={descripcion} />
+<meta property="og:image"       content={imagenAbsoluta} />
+<meta property="og:locale"      content="es_ES" />
+<meta property="og:site_name"   content="Luis Miguel Agud Sorlí" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card"        content="summary_large_image" />
+<meta name="twitter:site"        content={twitterHandle} />
+<meta name="twitter:title"       content={titulo} />
+<meta name="twitter:description" content={descripcion} />
+<meta name="twitter:image"       content={imagenAbsoluta} />
+
+<!-- Schema.org -->
+{schema && (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+)}

@@ -1,0 +1,83 @@
+---
+import '../styles/global.css';
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  imagen?: string;
+  canonical?: string;
+  tipo?: 'website' | 'article' | 'book';
+  schema?: object;
+}
+
+const { titulo, descripcion, imagen, canonical, tipo, schema } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#F7F3EE" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <SEO
+    titulo={titulo}
+    descripcion={descripcion}
+    imagen={imagen}
+    canonical={canonical}
+    tipo={tipo}
+    schema={schema}
+  />
+</head>
+<body>
+
+  <!-- Enlace para saltar al contenido (accesibilidad) -->
+  <a
+    href="#contenido-principal"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-oro focus:text-tinta focus:font-medium focus:text-sm"
+  >
+    Saltar al contenido
+  </a>
+
+  <Header />
+
+  <main id="contenido-principal" tabindex="-1">
+    <slot />
+  </main>
+
+  <Footer />
+
+</body>
+</html>
+
+<!-- Scroll reveal con IntersectionObserver -->
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>
+
+<!-- Tema oscuro: aplicar antes de pintar para evitar flash -->
+<script is:inline>
+  (function() {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+</script>

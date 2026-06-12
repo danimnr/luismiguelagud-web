@@ -1,0 +1,136 @@
+---
+interface Props {
+  id: string;
+  etiquetaAnterior?: string;
+  etiquetaSiguiente?: string;
+}
+const {
+  id,
+  etiquetaAnterior = 'Anterior',
+  etiquetaSiguiente = 'Siguiente',
+} = Astro.props;
+---
+
+<div class="relative" data-carousel={id}>
+  <!-- Gradiente indicador izquierda -->
+  <div
+    class="pointer-events-none absolute left-0 top-0 bottom-0 w-12 z-10 bg-gradient-to-r from-crema dark:from-crema-dark to-transparent opacity-0 transition-opacity"
+    data-fade-left
+    aria-hidden="true"
+  ></div>
+
+  <!-- Track -->
+  <div
+    id={`carousel-${id}`}
+    class="carousel-track pb-6"
+    role="region"
+    aria-label={`Carrusel: ${id}`}
+    tabindex="0"
+  >
+    <slot />
+  </div>
+
+  <!-- Gradiente indicador derecha -->
+  <div
+    class="pointer-events-none absolute right-0 top-0 bottom-0 w-12 z-10 bg-gradient-to-l from-crema dark:from-crema-dark to-transparent transition-opacity"
+    data-fade-right
+    aria-hidden="true"
+  ></div>
+
+  <!-- Botones de navegación -->
+  <div class="flex items-center gap-3 mt-4" aria-label="Controles del carrusel">
+    <button
+      data-prev
+      class="carousel-btn"
+      aria-label={etiquetaAnterior}
+      type="button"
+      disabled
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <button
+      data-next
+      class="carousel-btn"
+      aria-label={etiquetaSiguiente}
+      type="button"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .carousel-btn {
+    @apply flex items-center justify-center w-10 h-10 border border-arena dark:border-arena-dark
+           text-tinta dark:text-tinta-dark hover:border-oro hover:text-oro transition-all duration-300
+           disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((wrapper) => {
+    const id = wrapper.dataset.carousel!;
+    const track = document.getElementById(`carousel-${id}`) as HTMLElement;
+    const prevBtn = wrapper.querySelector<HTMLButtonElement>('[data-prev]')!;
+    const nextBtn = wrapper.querySelector<HTMLButtonElement>('[data-next]')!;
+    const fadeLeft = wrapper.querySelector<HTMLElement>('[data-fade-left]')!;
+    const fadeRight = wrapper.querySelector<HTMLElement>('[data-fade-right]')!;
+
+    // Cuánto avanzar (aprox. el ancho de una tarjeta + gap)
+    const scrollAmount = () => {
+      const first = track.querySelector<HTMLElement>('.carousel-item');
+      return first ? first.offsetWidth + 24 : 300;
+    };
+
+    const updateButtons = () => {
+      const atStart = track.scrollLeft <= 4;
+      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      prevBtn.disabled = atStart;
+      nextBtn.disabled = atEnd;
+      fadeLeft.style.opacity = atStart ? '0' : '1';
+      fadeRight.style.opacity = atEnd ? '0' : '1';
+    };
+
+    prevBtn.addEventListener('click', () => {
+      track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', () => {
+      track.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+    });
+
+    track.addEventListener('scroll', updateButtons, { passive: true });
+    updateButtons();
+
+    // Drag-to-scroll
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    track.addEventListener('mousedown', (e) => {
+      isDown = true;
+      track.style.cursor = 'grabbing';
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+    });
+    track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = ''; });
+    track.addEventListener('mouseup',    () => { isDown = false; track.style.cursor = ''; });
+    track.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - track.offsetLeft;
+      track.scrollLeft = scrollLeft - (x - startX);
+    });
+
+    // Navegación teclado desde el track
+    track.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { track.scrollBy({ left: scrollAmount(), behavior: 'smooth' }); e.preventDefault(); }
+      if (e.key === 'ArrowLeft')  { track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }); e.preventDefault(); }
+    });
+
+    window.addEventListener('resize', updateButtons, { passive: true });
+  });
+</script>
