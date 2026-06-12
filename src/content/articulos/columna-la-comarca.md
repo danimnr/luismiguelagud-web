@@ -7,7 +7,10 @@ extracto: Luis Miguel Agud colabora regularmente con La Comarca Grupo de
 fecha: 2024-06-01
 medio: La Comarca
 categoria: Opinión
-etiquetas: opinión ,cultura,La Comarca
+etiquetas:
+  - "opinión"
+  - "cultura"
+  - "La Comarca"
 autor: Luis Miguel Agud Sorlí
 tipo: externo
 enlace_externo: https://www.lacomarca.net/opinion/lo-dia-mes-important/
