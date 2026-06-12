@@ -176,3 +176,11 @@
     flex: 0 0 calc(85%);
   }
 }
+
+/* Prose modo oscuro */
+.dark .prose-editorial {
+  color: var(--color-tinta);
+}
+.dark .prose-editorial h2 {
+  color: var(--color-tinta);
+}
