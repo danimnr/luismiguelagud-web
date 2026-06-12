@@ -16,7 +16,7 @@ const libros = defineCollection({
     isbn: z.string().optional(),
     paginas: z.number().int().positive().optional(),
     genero: z.string().optional(),
-    estado: z.enum(['publicado', 'proximamente', 'agotado']).default('publicado'),
+    estado: z.string().default('publicado'),
     boton_texto: z.string().default('Conseguir libro'),
     enlace_compra: z.string().url().optional(),
     enlaces_alternativos: z
@@ -48,7 +48,7 @@ const articulos = defineCollection({
     tiempo_lectura: z.number().int().positive().optional(),
     destacado: z.boolean().default(false),
     orden: z.number().int().default(99),
-    tipo: z.enum(['externo', 'propio']).default('propio'),
+    tipo: z.string().default('propio'),
     publicado: z.boolean().default(true),
   }),
 });
@@ -58,17 +58,7 @@ const apariciones = defineCollection({
   type: 'content',
   schema: z.object({
     titulo: z.string(),
-    tipo: z.enum([
-      'entrevista',
-      'podcast',
-      'presentacion',
-      'premio',
-      'evento',
-      'colaboracion',
-      'relato',
-      'prensa',
-      'otro',
-    ]),
+    tipo: z.string(),
     fecha: z.coerce.date().optional(),
     medio: z.string().optional(),
     descripcion: z.string().optional(),
