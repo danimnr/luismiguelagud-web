@@ -76,27 +76,12 @@ content:
       - { name: foto,         label: "Fotografía del autor",type: image,   required: true }
       - { name: foto_alt,     label: "Descripción de la foto", type: string, required: true }
       - { name: email,        label: "Correo de contacto",  type: string,  required: true }
-      - name: citas
-        label: Citas destacadas
-        type: list
-        item:
-          type: object
-          fields:
-            - { name: texto, label: "Texto de la cita", type: text,   required: true }
-            - { name: autor, label: "Atribución",       type: string, required: true }
-      - name: redes
-        label: Redes sociales
-        type: list
-        item:
-          type: object
-          fields:
-            - name: red
-              label: Red social
-              type: select
-              options: [twitter, instagram, goodreads, linkedin, substack]
-              required: true
-            - { name: url,      label: "URL del perfil", type: string, required: true }
-            - { name: etiqueta, label: "Nombre visible", type: string, required: true }
+      - { name: cita_texto,    label: "Cita destacada (texto)",   type: text }
+      - { name: cita_autor,    label: "Cita destacada (autor)",   type: string }
+      - { name: red_instagram, label: "Instagram — URL completa", type: string }
+      - { name: red_twitter,   label: "Twitter/X — URL completa", type: string }
+      - { name: red_goodreads, label: "Goodreads — URL completa", type: string }
+      - { name: red_linkedin,  label: "LinkedIn — URL completa",  type: string }
 
   # ────────────────────────────────────────────────────────────
   # LIBROS
