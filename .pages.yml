@@ -99,11 +99,7 @@ content:
       - { name: descripcion_corta, label: "Descripción corta",       type: text,    required: true }
       - { name: sinopsis,          label: "Sinopsis completa",       type: rich-text }
       - { name: precio,            label: "Precio (número)",         type: number }
-      - name: moneda
-        label: Moneda
-        type: select
-        options: [EUR, USD, GBP, MXN, ARS, COP]
-        default: EUR
+      - { name: moneda, label: "Moneda (EUR, USD, GBP...)", type: string, default: EUR }
       - { name: fecha_publicacion, label: "Fecha de publicación",    type: date }
       - { name: editorial,         label: "Editorial",               type: string }
       - { name: isbn,              label: "ISBN (opcional)",         type: string }
@@ -154,14 +150,7 @@ content:
         type: list
         item: { type: string }
       - { name: autor,     label: "Autor",               type: string }
-      - name: tipo
-        label: Tipo de artículo
-        type: select
-        options:
-          - { label: "Artículo propio (publicado aquí)", value: propio }
-          - { label: "Artículo externo (enlaza a otro medio)", value: externo }
-        default: propio
-        required: true
+      - { name: tipo, label: "Tipo (propio / externo)", type: string, default: propio, required: true }
       - { name: enlace_externo,  label: "URL del artículo externo",   type: string }
       - { name: tiempo_lectura,  label: "Tiempo de lectura (minutos)", type: number }
       - { name: destacado,       label: "¿Artículo destacado?",        type: boolean }
@@ -182,20 +171,7 @@ content:
       fields: [titulo, tipo, fecha, activo]
     fields:
       - { name: titulo, label: "Título",           type: string, required: true }
-      - name: tipo
-        label: Tipo de aparición
-        type: select
-        options:
-          - { label: "Entrevista",          value: entrevista }
-          - { label: "Podcast",             value: podcast }
-          - { label: "Presentación",        value: presentacion }
-          - { label: "Premio",              value: premio }
-          - { label: "Evento",              value: evento }
-          - { label: "Colaboración",        value: colaboracion }
-          - { label: "Relato publicado",    value: relato }
-          - { label: "Aparición en prensa", value: prensa }
-          - { label: "Otro",                value: otro }
-        required: true
+      - { name: tipo, label: "Tipo (entrevista / podcast / presentacion / premio / evento / colaboracion / relato / prensa / otro)", type: string, required: true }
       - { name: fecha,       label: "Fecha",             type: date }
       - { name: medio,       label: "Medio o plataforma", type: string }
       - { name: descripcion, label: "Descripción corta", type: text }
