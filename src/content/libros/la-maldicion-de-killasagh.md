@@ -1,33 +1,25 @@
 ---
-titulo: "La Maldición de Killasagh"
-portada: "/images/placeholder/libro-1.jpg"
-portada_alt: "Portada de La Maldición de Killasagh — reloj de arena con ilustración mística"
-descripcion_corta: "El comienzo de la saga. Un pueblo con un secreto que lleva siglos enterrado y una maldición que no perdona."
-sinopsis: >
-  Killasagh es un pueblo que no aparece en ningún mapa moderno. Sus habitantes
-  conocen las reglas desde que nacen: no salir después del ocaso, no hablar
-  con desconocidos, no mencionar el nombre de los que se fueron.
-
-  Cuando Aran regresa al pueblo de su familia después de años de ausencia,
-  descubre que las reglas existen por una razón. Y que él mismo forma parte
-  de algo que empezó mucho antes de que naciera.
-
-  La primera entrega de la saga Killasagh llegó a su segunda edición gracias
-  a sus lectores. Un relato de fantasía oscura que mezcla folklore, terror y
-  una mitología propia construida con cuidado.
-precio: 18.00
-moneda: "EUR"
-editorial: "Editorial Acen"
-genero: "Fantasía oscura / Terror"
-estado: "publicado"
-boton_texto: "Comprar en Amazon"
-enlace_compra: "https://amazon.es"
-enlaces_alternativos:
-  - texto: "Editorial Acen"
-    url: "https://editorialacen.com"
+titulo: La Maldición de Killasagh
+portada: /images/placeholder/libro-1.jpg
+portada_alt: Portada de La Maldición de Killasagh — reloj de arena con ilustración mística
+descripcion_corta: El comienzo de la saga. Un pueblo con un secreto que lleva
+  siglos enterrado y una maldición que no perdona.
+sinopsis: Encajada en lo más hondo de la costa irlandesa, Killasagh es apenas un
+  puñado de casas azotadas por el viento del norte. La llegada de Bruno turbará
+  la calma del lugar, desatando una cadena de sucesos insondables que
+  erosionarán la frontera entre lo tangible y lo sobrenatural. Entre susurros de
+  un pasado siempre latente, resurgirá la sombra de Aedus Matholwch, un conde
+  envuelto en un aura de misterio, cuya presencia aún palpita en las grietas del
+  tiempo.
+precio: 21
+moneda: EUR
+fecha_publicacion: 2025-03-17
+editorial: Editorial Acen
+genero: Thriller, terror gótico.
+estado: publicado
+boton_texto: Comprar en Fnac
+enlace_compra: "https://www.fnac.es/a11832595/Luis-Miguel-Agud-Sorli-La-Maldici\
+  on-De-Killasagh "
 destacado: true
 orden: 1
-resenas:
-  - texto: "Una segunda edición que demuestra que Killasagh ha encontrado a sus lectores."
-    autor: "Editorial Acen"
 ---
