@@ -110,24 +110,16 @@ content:
       - { name: paginas,           label: "Número de páginas",       type: number }
       - { name: genero,            label: "Género literario",        type: string }
       - name: estado
-        label: Estado
-        type: select
-        options:
-          - { label: "Disponible",    value: publicado }
-          - { label: "Próximamente",  value: proximamente }
-          - { label: "Agotado",       value: agotado }
+        label: "Estado (publicado / proximamente / agotado)"
+        type: string
         default: publicado
         required: true
       - { name: boton_texto,       label: "Texto del botón compra",  type: string }
       - { name: enlace_compra,     label: "Enlace de compra (URL)",  type: string }
-      - name: enlaces_alternativos
-        label: Otros lugares de compra
-        type: list
-        item:
-          type: object
-          fields:
-            - { name: texto, label: "Nombre de la tienda", type: string, required: true }
-            - { name: url,   label: "URL",                 type: string, required: true }
+      - { name: enlace_amazon,  label: "Amazon (URL)",    type: string }
+      - { name: enlace_fnac,    label: "FNAC (URL)",      type: string }
+      - { name: enlace_casadellibro, label: "Casa del Libro (URL)", type: string }
+      - { name: enlace_acen,    label: "Editorial Acen (URL)", type: string }
       - { name: destacado, label: "¿Libro destacado?", type: boolean, default: false }
       - { name: orden,     label: "Orden de aparición (número)", type: number, required: true }
       - { name: fragmento_pdf, label: "Enlace a fragmento PDF", type: string }
